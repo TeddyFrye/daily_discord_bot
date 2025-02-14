@@ -1,15 +1,13 @@
-// Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits } = require("discord.js");
-// Load environment variables from the .env file
+const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
+const path = require("node:path");
+const fs = require("node:fs");
 require("dotenv").config();
-
-// Access the token from the environment variables
 const token = process.env.TOKEN;
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// When the client is ready, run this code (only once).
+// When the client is ready, run this code once.
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
@@ -54,16 +52,16 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
         content: "There was an error while executing this command!",
-        flags: MessageFlags.Ephemeral,
+        ephemeral: true,
       });
     } else {
       await interaction.reply({
         content: "There was an error while executing this command!",
-        flags: MessageFlags.Ephemeral,
+        ephemeral: true,
       });
     }
   }
 });
 
-// Log in to Discord with your client's token
+// Log in to Discord with your token
 client.login(token);
