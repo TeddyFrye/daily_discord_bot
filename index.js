@@ -4,21 +4,16 @@ const fs = require("node:fs");
 require("dotenv").config();
 const token = process.env.TOKEN;
 
-// Import the daily reminder function
 const scheduleDailyReminder = require("./dailyReminder");
 
-// Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// When the client is ready, run this code once.
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 
-  // IMPORTANT: Call the daily reminder scheduler here
   scheduleDailyReminder(client);
 });
 
-// Set up your commands collection
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, "commands");
@@ -71,5 +66,4 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-// Log in to Discord with your token
 client.login(token);

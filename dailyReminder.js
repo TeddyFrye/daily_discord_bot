@@ -5,7 +5,7 @@ module.exports = (client) => {
   // second (0) minute (0) hour (17) dayOfMonth (*) month (*) dayOfWeek (*)
   cron.schedule("0 0 17 * * *", async () => {
     try {
-      const channelId = "1157703568011317309"; // <--- The channel you want to post in
+      const channelId = "1157703568011317309";
       const channel = await client.channels.fetch(channelId);
 
       if (!channel) {
@@ -13,7 +13,6 @@ module.exports = (client) => {
         return;
       }
 
-      // Send your reminder message
       await channel.send(
         "**STATEMENT:** This is your reminder to send a stand-up summary of your work today."
       );
