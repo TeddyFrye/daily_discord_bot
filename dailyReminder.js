@@ -2,7 +2,7 @@ const cron = require("node-cron");
 
 module.exports = (client) => {
   cron.schedule(
-    "0 0 17 * * 1-5",
+    "0 0 9 * * 1-5",
     async () => {
       try {
         const channelId = "1157703568011317309";
