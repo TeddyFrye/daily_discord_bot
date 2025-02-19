@@ -1,24 +1,25 @@
 const cron = require("node-cron");
 
 module.exports = (client) => {
-  // Schedule for 5:00 PM server time:
-  // second (0) minute (0) hour (17) dayOfMonth (*) month (*) dayOfWeek (*)
-  cron.schedule("0 0 17 * * *", async () => {
-    try {
-      const channelId = "1157703568011317309";
-      const channel = await client.channels.fetch(channelId);
+  cron.schedule(
+    "0 0 17 * * 1-5",
+    async () => {
+      try {
+        const channelId = "1157703568011317309";
+        const channel = await client.channels.fetch(channelId);
+        if (!channel)
+          return console.error(`Channel with ID ${channelId} not found.`);
 
-      if (!channel) {
-        console.error(`Channel with ID ${channelId} not found.`);
-        return;
+        await channel.send(
+          "**STATEMENT:** This is your reminder to send a stand-up summary of your work today."
+        );
+        console.log("Daily reminder sent at 5pm (Mon-Fri)!");
+      } catch (error) {
+        console.error("Error sending daily reminder:", error);
       }
-
-      await channel.send(
-        "**STATEMENT:** This is your reminder to send a stand-up summary of your work today."
-      );
-      console.log("Daily reminder sent at 5pm!");
-    } catch (error) {
-      console.error("Error sending daily reminder:", error);
+    },
+    {
+      timezone: "America/Chicago",
     }
-  });
+  );
 };
